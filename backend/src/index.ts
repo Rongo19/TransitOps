@@ -6,9 +6,13 @@ import authRoutes from "./routes/authRoutes";
 import vehicleRoutes from "./routes/vehicleRoutes";
 import driverRoutes from "./routes/driverRoutes";
 import tripRoutes from "./routes/tripRoutes";
+import maintenanceRoutes from "./routes/maintenanceRoutes";
 
 
 import { errorHandler } from "./middlewares/errorHandler";
+
+import fuelExpenseRoutes from "./routes/fuelExpenseRoutes";
+import analyticsRoutes from "./routes/analyticsRoutes";
 
 dotenv.config();
 
@@ -35,6 +39,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/vehicles", vehicleRoutes);
 app.use("/api/drivers", driverRoutes);
 app.use("/api/trips", tripRoutes);
+app.use("/api/maintenance", maintenanceRoutes);
+// ...
+app.use("/api", fuelExpenseRoutes);   // exposes /api/fuel-logs and /api/expenses
+app.use("/api", analyticsRoutes);      // exposes /api/dashboard/kpis and /api/analytics/*
 
 // Error handler (always last)
 app.use(errorHandler);

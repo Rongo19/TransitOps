@@ -68,5 +68,22 @@ export interface MaintenanceLog {
   date: string;
   status: MaintenanceStatus;
 }
+export interface FuelLog {
+  id: string;
+  vehicle: Pick<Vehicle, "id" | "name">;
+  date: string;
+  liters: number;
+  cost: number;
+}
 
+export interface Expense {
+  id: string;
+  trip: { id: string; tripCode: string } | null;
+  vehicle: Pick<Vehicle, "id" | "name">;
+  toll: number;
+  other: number;
+  maintenanceLinked: number;
+  total: number;
+  status: "AVAILABLE" | "COMPLETED"; // reflects linked vehicle/trip status per wireframe
+}
 

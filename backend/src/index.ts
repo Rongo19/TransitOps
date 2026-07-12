@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
 import vehicleRoutes from "./routes/vehicleRoutes";
 import driverRoutes from "./routes/driverRoutes";
+import tripRoutes from "./routes/tripRoutes";
 
 
 import { errorHandler } from "./middlewares/errorHandler";
@@ -33,6 +34,7 @@ app.get("/api/health", (_req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/vehicles", vehicleRoutes);
 app.use("/api/drivers", driverRoutes);
+app.use("/api/trips", tripRoutes);
 
 // Error handler (always last)
 app.use(errorHandler);

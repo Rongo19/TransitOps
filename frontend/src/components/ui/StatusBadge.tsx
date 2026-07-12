@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
 interface StatusBadgeProps {
   status: string;
   colorMap: Record<string, string>;
@@ -38,9 +35,7 @@ export const driverStatusColors: Record<string, string> = {
   OFF_DUTY: "bg-gray-400 text-white",
   SUSPENDED: "bg-red-600 text-white",
 };
-=======
->>>>>>> Stashed changes
-// tsx
+
 export function SafetyScoreBadge({ score }: { score: number }) {
   const color =
     score >= 90
@@ -48,14 +43,10 @@ export function SafetyScoreBadge({ score }: { score: number }) {
       : score >= 80
       ? "bg-amber-500 text-white"
       : "bg-red-600 text-white";
+
   return <span className={`inline-block px-3 py-1 rounded-md text-xs font-medium ${color}`}>{score}%</span>;
 }
 
 export function isLicenseExpired(expiryDate: string) {
   return new Date(expiryDate) < new Date();
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> 589d98de66c2f6ead2862b216e0fbed37e05b0ca
->>>>>>> Stashed changes

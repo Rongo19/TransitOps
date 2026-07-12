@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useVehicles } from "../../api/vehicles";
+import { useVehicles } from "../../api/vehicle";
 import { useDrivers } from "../../api/drivers";
 import { useCreateTrip, useDispatchTrip } from "../../api/trips";
 
@@ -10,11 +10,36 @@ const tripSchema = z.object({
   destination: z.string().min(1, "Destination is required"),
   vehicleId: z.string().min(1, "Select a vehicle"),
   driverId: z.string().min(1, "Select a driver"),
-  cargoWeight: z.coerce.number().positive("Enter cargo weight"),
-  plannedDistance: z.coerce.number().positive("Enter planned distance"),
+  cargoWeight: z
+    .string()
+    .trim()
+    .min(1, "Enter cargo weight")
+    .transform((value) => Number(value))
+    .refine((value) => Number.isFinite(value) && value > 0, "Enter cargo weight"),
+  plannedDistance: z
+    .string()
+    .trim()
+    .min(1, "Enter planned distance")
+    .transform((value) => Number(value))
+    .refine((value) => Number.isFinite(value) && value > 0, "Enter planned distance"),
 });
 
-type TripForm = z.infer<typeof tripSchema>;
+type TripForm = {
+  source: string;
+  destination: string;
+  vehicleId: string;
+  driverId: string;
+  cargoWeight: string;
+  plannedDistance: string;
+};
+type TripPayload = {
+  source: string;
+  destination: string;
+  vehicleId: string;
+  driverId: string;
+  cargoWeight: number;
+  plannedDistance: number;
+};
 
 export function CreateTripPanel() {
   const { data: vehicles } = useVehicles({ status: "AVAILABLE" });
@@ -41,7 +66,12 @@ export function CreateTripPanel() {
 
   const onSubmit = async (data: TripForm) => {
     if (capacityExceeded) return; // guarded by disabled button too, belt and suspenders
-    const trip = await createTrip.mutateAsync(data);
+    const payload: TripPayload = {
+      ...data,
+      cargoWeight: Number(data.cargoWeight),
+      plannedDistance: Number(data.plannedDistance),
+    };
+    const trip = await createTrip.mutateAsync(payload);
     await dispatchTrip.mutateAsync(trip.id);
     reset();
   };

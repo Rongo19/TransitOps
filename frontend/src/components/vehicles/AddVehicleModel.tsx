@@ -1,20 +1,51 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useCreateVehicle } from "../../api/vehicles";
+import { useCreateVehicle } from "../../api/vehicle";
 
 const vehicleSchema = z.object({
   registrationNumber: z.string().min(3, "Registration number is required"),
   name: z.string().min(1, "Name/model is required"),
   type: z.string().min(1, "Select a vehicle type"),
-  maxLoadCapacity: z.coerce.number().positive("Capacity must be a positive number"),
-  odometer: z.coerce.number().nonnegative().default(0),
-  acquisitionCost: z.coerce.number().nonnegative("Enter a valid cost"),
+  maxLoadCapacity: z
+    .string()
+    .trim()
+    .min(1, "Capacity must be a positive number")
+    .transform((value) => Number(value))
+    .refine((value) => Number.isFinite(value) && value > 0, "Capacity must be a positive number"),
+  odometer: z
+    .string()
+    .trim()
+    .optional()
+    .default("")
+    .transform((value) => Number(value || 0))
+    .refine((value) => Number.isFinite(value) && value >= 0, "Enter a valid odometer reading"),
+  acquisitionCost: z
+    .string()
+    .trim()
+    .min(1, "Enter a valid cost")
+    .transform((value) => Number(value))
+    .refine((value) => Number.isFinite(value) && value >= 0, "Enter a valid cost"),
 });
 
-type VehicleForm = z.infer<typeof vehicleSchema>;
+type VehicleForm = {
+  registrationNumber: string;
+  name: string;
+  type: string;
+  maxLoadCapacity: string;
+  odometer?: string;
+  acquisitionCost: string;
+};
+type VehiclePayload = {
+  registrationNumber: string;
+  name: string;
+  type: string;
+  maxLoadCapacity: number;
+  odometer: number;
+  acquisitionCost: number;
+};
 
-export function AddVehicleModal({ onClose }: { onClose: () => void }) {
+export function AddVehicleModel({ onClose }: { onClose: () => void }) {
   const { mutateAsync, isPending, error } = useCreateVehicle();
   const {
     register,
@@ -23,7 +54,13 @@ export function AddVehicleModal({ onClose }: { onClose: () => void }) {
   } = useForm<VehicleForm>({ resolver: zodResolver(vehicleSchema) });
 
   const onSubmit = async (data: VehicleForm) => {
-    await mutateAsync({ ...data, status: "AVAILABLE" });
+    const payload: VehiclePayload = {
+      ...data,
+      maxLoadCapacity: Number(data.maxLoadCapacity),
+      odometer: Number(data.odometer ?? 0),
+      acquisitionCost: Number(data.acquisitionCost),
+    };
+    await mutateAsync({ ...payload, status: "AVAILABLE" });
     onClose();
   };
 

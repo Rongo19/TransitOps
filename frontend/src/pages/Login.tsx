@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { apiClient } from "../api/clients";
 
@@ -91,10 +91,8 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="text-xs text-gray-500 mt-6 leading-relaxed">
-          Access is scoped by role after login: Fleet Manager → Fleet, Maintenance · Dispatcher →
-          Dashboard, Trips · Safety Officer → Drivers, Compliance · Financial Analyst → Fuel &
-          Expenses, Analytics
+        <p className="text-xs text-gray-500 mt-4 text-center">
+  Don't have an account? <Link to="/register" className="text-blue-600 hover:underline">Create one</Link>
         </p>
       </div>
     </div>

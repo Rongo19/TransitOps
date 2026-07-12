@@ -1,7 +1,12 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+
 import authRoutes from "./routes/authRoutes";
+import vehicleRoutes from "./routes/vehicleRoutes";
+import driverRoutes from "./routes/driverRoutes";
+
+
 import { errorHandler } from "./middlewares/errorHandler";
 
 dotenv.config();
@@ -14,15 +19,26 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json());
 
 app.get("/api/health", (_req, res) => {
-  res.json({ success: true, message: "TransitOps backend is running" });
+  res.json({
+    success: true,
+    message: "TransitOps backend is running",
+  });
 });
 
+// Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/vehicles", vehicleRoutes);
+app.use("/api/drivers", driverRoutes);
 
+// Error handler (always last)
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});

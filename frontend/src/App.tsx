@@ -12,6 +12,8 @@ import Maintenance from "./pages/Maintenance";
 import FuelExpenses from "./pages/FuelExpenses";
 import ReportsAnalytics from "./pages/ReportsAnalytics";
 import Settings from "./pages/Settings";
+import Register from "./pages/Register";
+
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,7 @@ export default function App() {
               <Route path="/fuel-expenses" element={<FuelExpenses />} />
               <Route path="/analytics" element={<ReportsAnalytics />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/register" element={<Register />} />
               {/* Add more routes here as you build them */}
             </Route>
             <Route path="*" element={<Navigate to="/dashboard" replace />} />

@@ -1,9 +1,8 @@
-tsx
 import { useState } from "react";
 import { useDrivers, useUpdateDriverStatus } from "../api/drivers";
 import { AddDriverModal } from "../components/drivers/AddDriverModal";
-import { StatusBadge, driverStatusColors, SafetyScoreBadge, isLicenseExpired } from "../components/ui/StatusBadge";
-import { DriverStatus } from "../types";
+import { SafetyScoreBadge, isLicenseExpired } from "../components/ui/StatusBadge";
+import { type DriverStatus, type Driver } from "../types";
 
 const toggleOptions: { status: DriverStatus; color: string }[] = [
   { status: "AVAILABLE", color: "bg-green-600" },
@@ -80,7 +79,7 @@ export default function DriverManagement() {
                 </td>
               </tr>
             )}
-            {drivers?.map((d) => {
+            {drivers?.map((d: Driver) => {
               const expired = isLicenseExpired(d.licenseExpiryDate);
               return (
                 <tr
@@ -108,7 +107,13 @@ export default function DriverManagement() {
                     <SafetyScoreBadge score={d.safetyScore} />
                   </td>
                   <td className="px-4 py-3">
-                    <StatusBadge status={d.status} colorMap={driverStatusColors} />
+                    <span
+                      className={`px-2 py-1 rounded-md text-white text-xs font-medium inline-block ${
+                        toggleOptions.find((t) => t.status === d.status)?.color || "bg-gray-500"
+                      }`}
+                    >
+                      {d.status.replace("_", " ")}
+                    </span>
                   </td>
 
                   {/* Inline quick-toggle row, appears on row click */}

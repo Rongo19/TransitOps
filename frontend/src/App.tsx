@@ -5,6 +5,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AppShell } from "./components/layout/AppShell";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import DriverManagement from "./pages/DriverManagement";
 
 const queryClient = new QueryClient();
 
@@ -23,7 +24,8 @@ export default function App() {
               }
             >
               <Route path="/dashboard" element={<Dashboard />} />
-              {/* /vehicles, /drivers, /trips, /maintenance, /fuel-expenses, /analytics, /settings go here as you build them */}
+              <Route path="/drivers" element={<DriverManagement />} />
+              {/* /vehicles, /trips, /maintenance, /fuel-expenses, /analytics, /settings go here as you build them */}
             </Route>
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>

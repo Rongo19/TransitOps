@@ -7,6 +7,8 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import DriverManagement from "./pages/DriverManagement";
 import VehicleRegistry from "./pages/VehicleRegistry";
+import TripDispatcher from "./pages/TripDispatcher";
+import Maintenance from "./pages/Maintenance";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +29,8 @@ export default function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/drivers" element={<DriverManagement />} />
               <Route path="/vehicles" element={<VehicleRegistry />} />
+              <Route path="/trips" element={<TripDispatcher />} />
+              <Route path="/maintenance" element={<Maintenance />} />
               {/* Add more routes here as you build them */}
             </Route>
             <Route path="*" element={<Navigate to="/dashboard" replace />} />

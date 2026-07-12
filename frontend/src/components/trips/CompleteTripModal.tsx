@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Trip } from "../../types";
+import { type Trip } from "../../types";
 import { useCompleteTrip } from "../../api/trips";
 
 export function CompleteTripModal({ trip, onClose }: { trip: Trip; onClose: () => void }) {

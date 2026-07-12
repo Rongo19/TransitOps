@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "./client";
-import { Vehicle } from "../types";
+import { apiClient } from "./clients";
+import { type Vehicle } from "../types";
 
 export function useVehicles(filters?: { type?: string; status?: string; search?: string }) {
   return useQuery({

@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "./client";
-import { Trip } from "../types";
+import { apiClient } from "./clients";
+import { type Trip } from "../types";
 
 export function useTrips() {
   return useQuery({

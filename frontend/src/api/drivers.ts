@@ -1,7 +1,7 @@
 // typescript
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "./client";
-import { Driver, DriverStatus } from "../types";
+import { apiClient } from "./clients";
+import { type Driver, type DriverStatus } from "../types";
 
 export function useDrivers(filters?: { status?: string; search?: string }) {
   return useQuery({

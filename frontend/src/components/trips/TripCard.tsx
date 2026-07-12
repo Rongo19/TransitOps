@@ -1,4 +1,4 @@
-import { Trip } from "../../types";
+import { type Trip } from "../../types";
 import { StatusBadge, tripStatusColors } from "../ui/StatusBadge";
 import { useCancelTrip } from "../../api/trips";
 

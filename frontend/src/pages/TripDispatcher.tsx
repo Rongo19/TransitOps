@@ -3,7 +3,7 @@ import { useTrips } from "../api/trips";
 import { CreateTripPanel } from "../components/trips/CreateTripPanel";
 import { TripCard } from "../components/trips/TripCard";
 import { CompleteTripModal } from "../components/trips/CompleteTripModal";
-import { Trip, TripStatus } from "../types";
+import { type Trip, type TripStatus } from "../types";
 
 const stages: TripStatus[] = ["DRAFT", "DISPATCHED", "COMPLETED", "CANCELLED"];
 

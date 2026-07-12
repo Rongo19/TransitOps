@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useVehicles } from "../api/vehicles";
+import { useVehicles } from "../api/vehicle";
 import { AddVehicleModal } from "../components/vehicles/AddVehicleModal";
 import { StatusBadge, vehicleStatusColors } from "../components/ui/StatusBadge";
 

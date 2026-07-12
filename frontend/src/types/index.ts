@@ -57,3 +57,16 @@ export interface DashboardKpis {
   driversOnDuty: number;
   fleetUtilization: number; // percentage
 }
+
+export type MaintenanceStatus = "ACTIVE" | "COMPLETED";
+
+export interface MaintenanceLog {
+  id: string;
+  vehicle: Pick<Vehicle, "id" | "registrationNumber" | "name">;
+  serviceType: string;
+  cost: number;
+  date: string;
+  status: MaintenanceStatus;
+}
+
+

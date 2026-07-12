@@ -24,14 +24,6 @@ const tripSchema = z.object({
     .refine((value) => Number.isFinite(value) && value > 0, "Enter planned distance"),
 });
 
-type TripForm = {
-  source: string;
-  destination: string;
-  vehicleId: string;
-  driverId: string;
-  cargoWeight: string;
-  plannedDistance: string;
-};
 type TripPayload = {
   source: string;
   destination: string;
@@ -53,7 +45,7 @@ export function CreateTripPanel() {
     watch,
     reset,
     formState: { errors },
-  } = useForm<TripForm>({ resolver: zodResolver(tripSchema) });
+  } = useForm({ resolver: zodResolver(tripSchema) });
 
   const selectedVehicleId = watch("vehicleId");
   const cargoWeight = watch("cargoWeight");
@@ -64,7 +56,7 @@ export function CreateTripPanel() {
 
   const isBusy = createTrip.isPending || dispatchTrip.isPending;
 
-  const onSubmit = async (data: TripForm) => {
+  const onSubmit = async (data: any) => {
     if (capacityExceeded) return; // guarded by disabled button too, belt and suspenders
     const payload: TripPayload = {
       ...data,

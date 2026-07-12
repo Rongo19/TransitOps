@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useVehicles } from "../../api/vehicles";
+import { useVehicles } from "../../api/vehicle";
 import { useLogFuel } from "../../api/fuelExpenses";
 
 const schema = z.object({
@@ -10,16 +10,14 @@ const schema = z.object({
   liters: z.coerce.number().positive("Enter liters"),
   cost: z.coerce.number().positive("Enter cost"),
 });
-type FormData = z.infer<typeof schema>;
-
 export function LogFuelModal({ onClose }: { onClose: () => void }) {
   const { data: vehicles } = useVehicles();
   const logFuel = useLogFuel();
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: any) => {
     await logFuel.mutateAsync(data);
     onClose();
   };

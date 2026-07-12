@@ -2,10 +2,10 @@ import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recha
 import { useAnalytics, exportCsv } from "../api/analytics";
 
 const summaryCards = (data: any) => [
-  { label: "Fuel efficiency", value: ${data?.fuelEfficiency ?? "—"} km/l, accent: "border-l-blue-500" },
-  { label: "Fleet utilization", value: ${data?.fleetUtilization ?? "—"}%, accent: "border-l-green-600" },
-  { label: "Operational cost", value: ₹${(data?.operationalCost ?? 0).toLocaleString()}, accent: "border-l-amber-500" },
-  { label: "Vehicle ROI", value: ${data?.vehicleROI ?? "—"}%, accent: "border-l-green-600" },
+  { label: "Fuel efficiency", value: `${data?.fuelEfficiency ?? "—"} km/l`, accent: "border-l-blue-500" },
+  { label: "Fleet utilization", value: `${data?.fleetUtilization ?? "—"}%`, accent: "border-l-green-600" },
+  { label: "Operational cost", value: `₹${(data?.operationalCost ?? 0).toLocaleString()}`, accent: "border-l-amber-500" },
+  { label: "Vehicle ROI", value: `${data?.vehicleROI ?? "—"}%`, accent: "border-l-green-600" },
 ];
 
 export default function ReportsAnalytics() {
@@ -23,7 +23,7 @@ export default function ReportsAnalytics() {
 
       <div className="grid grid-cols-4 gap-3">
         {summaryCards(data).map((c) => (
-          <div key={c.label} className={bg-white rounded-lg border border-gray-200 border-l-4 ${c.accent} px-4 py-4}>
+          <div key={c.label} className={`bg-white rounded-lg border border-gray-200 border-l-4 ${c.accent} px-4 py-4`}>
             <div className="text-[10px] font-medium text-gray-500 uppercase tracking-wide">{c.label}</div>
             <div className="text-2xl font-semibold text-gray-900 mt-1">{c.value}</div>
           </div>
@@ -53,7 +53,7 @@ export default function ReportsAnalytics() {
                 <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-red-600"
-                    style={{ width: ${(v.cost / v.maxCost) * 100}% }}
+                    style={{ width: `${(v.cost / v.maxCost) * 100}%` }}
                   />
                 </div>
               </div>

@@ -1,11 +1,10 @@
 import type { Request, Response, NextFunction } from "express";
-import { verifyToken } from "../utils/jwt";
+import { verifyToken } from "../utils/auth";
 import { prisma } from "../utils/prisma";
 
 export interface AuthRequest extends Request {
   user?: {
-    id: string;
-    email: string;
+    userId: string;
     role: string;
   };
 }
@@ -21,14 +20,14 @@ export async function authenticate(req: AuthRequest, res: Response, next: NextFu
     const decoded = verifyToken(token);
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
-      select: { id: true, email: true, role: true },
+      select: { id: true, role: true },
     });
 
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
 
-    req.user = user;
+    req.user = { userId: user.id, role: user.role };
     next();
   } catch {
     return res.status(401).json({ message: "Invalid token" });

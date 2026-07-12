@@ -1,39 +1,31 @@
-import type { Request, Response } from "express";
-import bcrypt from "bcrypt";
-import { prisma } from "../utils/prisma";
-import { signToken } from "../utils/jwt";
+import { Request, Response, NextFunction } from "express";
+import * as authService from "../services/authServices";
+import { AuthRequest } from "../middlewares/auth";
 
-export async function login(req: Request, res: Response) {
-  const { email, password } = req.body as { email?: string; password?: string };
-
-  if (!email || !password) {
-    return res.status(400).json({ message: "Email and password are required" });
+export async function register(req: Request, res: Response, next: NextFunction) {
+  try {
+    const result = await authService.registerUser(req.body);
+    res.status(201).json({ success: true, data: result });
+  } catch (err) {
+    next(err);
   }
-
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) {
-    return res.status(401).json({ message: "Invalid credentials" });
-  }
-
-  const validPassword = await bcrypt.compare(password, user.passwordHash);
-  if (!validPassword) {
-    return res.status(401).json({ message: "Invalid credentials" });
-  }
-
-  const token = signToken({ userId: user.id, role: user.role });
-
-  return res.json({
-    message: "Login successful",
-    token,
-    user: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    },
-  });
 }
 
-export async function me(req: any, res: Response) {
-  return res.json({ user: req.user });
+export async function login(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { email, password } = req.body;
+    const result = await authService.loginUser(email, password);
+    res.json({ success: true, data: result });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function me(req: AuthRequest, res: Response, next: NextFunction) {
+  try {
+    const user = await authService.getUserById(req.user!.userId);
+    res.json({ success: true, data: user });
+  } catch (err) {
+    next(err);
+  }
 }

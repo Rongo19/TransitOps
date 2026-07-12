@@ -9,8 +9,8 @@ export default function FuelExpenses() {
   const [showFuelModal, setShowFuelModal] = useState(false);
   const [showExpenseModal, setShowExpenseModal] = useState(false);
 
-  const totalFuel = fuelLogs?.reduce((sum, f) => sum + f.cost, 0) ?? 0;
-  const totalMaintenance = expenses?.reduce((sum, e) => sum + e.maintenanceLinked, 0) ?? 0;
+  const totalFuel = (fuelLogs ?? []).reduce<number>((sum, f) => sum + f.cost, 0);
+  const totalMaintenance = (expenses ?? []).reduce<number>((sum, e) => sum + e.maintenanceLinked, 0);
   const totalOperationalCost = totalFuel + totalMaintenance;
 
   return (
@@ -78,7 +78,7 @@ export default function FuelExpenses() {
                   <td className="px-4 py-3 text-gray-600">₹{e.other}</td>
                   <td className="px-4 py-3 text-gray-600">₹{e.maintenanceLinked}</td>
                   <td className="px-4 py-3">
-                    <span className={inline-block px-3 py-1 rounded-md text-xs font-medium ${e.status === "COMPLETED" ? "bg-lime-600 text-white" : "bg-green-600 text-white"}}>
+                    <span className={`inline-block px-3 py-1 rounded-md text-xs font-medium ${e.status === "COMPLETED" ? "bg-lime-600 text-white" : "bg-green-600 text-white"}`}>
                       ₹{e.total.toLocaleString()}
                     </span>
                   </td>

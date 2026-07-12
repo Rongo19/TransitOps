@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiClient } from "./client";
+import { apiClient } from "./clients";
 
 interface AnalyticsSummary {
   fuelEfficiency: number; // km/l
@@ -25,5 +25,5 @@ export function useAnalytics() {
 }
 
 export function exportCsv() {
-  window.open(${import.meta.env.VITE_API_URL}/reports/export?format=csv, "_blank");
+  window.open(`${import.meta.env.VITE_API_URL}/reports/export?format=csv`, "_blank");
 }

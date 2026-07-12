@@ -28,14 +28,6 @@ const vehicleSchema = z.object({
     .refine((value) => Number.isFinite(value) && value >= 0, "Enter a valid cost"),
 });
 
-type VehicleForm = {
-  registrationNumber: string;
-  name: string;
-  type: string;
-  maxLoadCapacity: string;
-  odometer?: string;
-  acquisitionCost: string;
-};
 type VehiclePayload = {
   registrationNumber: string;
   name: string;
@@ -51,9 +43,9 @@ export function AddVehicleModel({ onClose }: { onClose: () => void }) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<VehicleForm>({ resolver: zodResolver(vehicleSchema) });
+  } = useForm({ resolver: zodResolver(vehicleSchema) });
 
-  const onSubmit = async (data: VehicleForm) => {
+  const onSubmit = async (data: any) => {
     const payload: VehiclePayload = {
       ...data,
       maxLoadCapacity: Number(data.maxLoadCapacity),

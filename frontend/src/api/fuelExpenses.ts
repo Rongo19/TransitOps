@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "./client";
-import { FuelLog, Expense } from "../types";
+import { apiClient } from "./clients";
+import type { FuelLog, Expense } from "../types";
 
 export function useFuelLogs() {
   return useQuery({

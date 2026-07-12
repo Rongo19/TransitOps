@@ -15,13 +15,6 @@ const logSchema = z.object({
   date: z.string().min(1, "Select a date"),
 });
 
-type LogForm = {
-  vehicleId: string;
-  serviceType: string;
-  cost: string;
-  date: string;
-};
-
 export function LogServiceForm() {
   const createLog = useCreateMaintenanceLog();
   const {
@@ -29,9 +22,9 @@ export function LogServiceForm() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<LogForm>({ resolver: zodResolver(logSchema) });
+  } = useForm({ resolver: zodResolver(logSchema) });
 
-  const onSubmit = async (data: LogForm) => {
+  const onSubmit = async (data: any) => {
     await createLog.mutateAsync({
       ...data,
       cost: Number(data.cost),
